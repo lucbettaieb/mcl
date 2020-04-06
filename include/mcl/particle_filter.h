@@ -6,11 +6,12 @@
 #ifndef MCL_PARTICLE_FILTER_H
 #define MCL_PARTICLE_FILTER_H
 
+// MCL
+#include "particle_filter_params.h"
+#include "particles.h"
+
 namespace mcl
 {
-
-// MCL
-#include "mcl/particle_filter_params.h"
 
 class ParticleFilter
 {
@@ -22,9 +23,25 @@ public:
    */
   explicit ParticleFilter(const ParticleFilterParams& params);
 
+  /// A function to execute the particle filter
+  void execute();
+
 private:
   /// Parameters for the particle filter
-  ParticleFilterParams params_;
+  const ParticleFilterParams params_;
+
+  // const Distributor distributor;
+
+  // const Updater updater;
+
+  // const Scorer scorer;
+
+  // const Resampler resampler;
+
+  // const PoseExtractor pose_extractor;
+
+  /// The particles that the filter will operate on
+  ParticleArray particles_;
 };
 
 } // namespace mcl

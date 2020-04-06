@@ -21,7 +21,7 @@ namespace mcl
  */
 struct ParticleFilterParams
 {
-  ParticleFilterParams(const YAML::Node& node) :
+  ParticleFilterParams(const YAML::Node& node)
      {}
 
 private:
@@ -32,7 +32,7 @@ private:
   };
 
   /// An unordered map to convert a string to an enumerated type
-  static constexpr std::unordered_map distributor_str_to_enum<std::string, DistributorType>
+  const std::unordered_map<std::string, DistributorType> distributor_str_to_enum
   {
     {"DISTRIBUTOR_GAUSSIAN", DistributorType::DISTRIBUTOR_GAUSSIAN}
   };
@@ -45,10 +45,10 @@ private:
   };
 
   /// An unordered map to convert a string to an enumerated type
-  static constexpr std::unordered_map updater_str_to_enum<std::string, UpdaterType>
+  const std::unordered_map<std::string, UpdaterType> updater_str_to_enum
   {
     {"UPDATER_DIFF_DRIVE", UpdaterType::UPDATER_DIFF_DRIVE},
-    {"UPDATER_ACKERMANN", UpdatedType::UPDATER_ACKERMANN}
+    {"UPDATER_ACKERMANN", UpdaterType::UPDATER_ACKERMANN}
   };
 
   /// An enumerated type to allow for static typing of the scorer type
@@ -58,9 +58,9 @@ private:
   };
 
   /// An unordered map to convert a string to an enumerated type
-  static constexpr std::unordered_map scorer_str_to_enum<std::string, ScorerType>
+  const std::unordered_map<std::string, ScorerType> scorer_str_to_enum
   {
-    "SCORER_LIKELIHOOD_FIELD", ScorerType::SCORER_LIKELIHOOD_FIELD
+    {"SCORER_LIKELIHOOD_FIELD", ScorerType::SCORER_LIKELIHOOD_FIELD}
   };
 
   /// An enumerated type to allow for static typing of the resampler type
@@ -70,9 +70,9 @@ private:
   };
 
   /// An unordered map to convert a string to an enumerated type
-  static constexpr std::unordered_map resampler_str_to_enum<std::string, ResamplerType>
+  const std::unordered_map<std::string, ResamplerType> resampler_str_to_enum
   {
-    "RESAMPLER_LOW_VARIANCE", ResamplerType::RESAMPLER_LOW_VARIANCE
+    {"RESAMPLER_LOW_VARIANCE", ResamplerType::RESAMPLER_LOW_VARIANCE}
   };
 
   /// An enumerated type to allow for static typing of the pose extractor type
@@ -82,9 +82,9 @@ private:
   };
 
   /// An unordered map to convert a string to an enumerated type
-  static constexpr std::unordered_map pose_extractor_str_to_enum<std::string, PoseExtractorType>
+  const std::unordered_map<std::string, PoseExtractorType> pose_extractor_str_to_enum
   {
-    "POSE_EXTRACTOR_WEIGHTED_MEAN", PoseExtractorType::POSE_EXTRACTOR_WEIGHTED_MEAN
+    {"POSE_EXTRACTOR_WEIGHTED_MEAN", PoseExtractorType::POSE_EXTRACTOR_WEIGHTED_MEAN}
   };
 };
 
