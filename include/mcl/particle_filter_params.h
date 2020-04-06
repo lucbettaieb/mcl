@@ -1,0 +1,93 @@
+/**
+ * Author: Luc Bettaieb, 2020
+ * BSD-Licensed
+ */
+
+#ifndef MCL_PARTICLE_FILTER_PARAMS_H
+#define MCL_PARTICLE_FILTER_PARAMS_H
+
+// C++ Standard Library
+#include <string>
+#include <unordered_map>
+
+// YAML
+#include <yaml-cpp/yaml.h>
+
+namespace mcl
+{
+
+/**
+ * @brief Parameters for the particle filter
+ */
+struct ParticleFilterParams
+{
+  ParticleFilterParams(const YAML::Node& node) :
+     {}
+
+private:
+  /// An enumerated type to allow for static typing of the distributor type
+  enum DistributorType
+  {
+    DISTRIBUTOR_GAUSSIAN = 0
+  };
+
+  /// An unordered map to convert a string to an enumerated type
+  static constexpr std::unordered_map distributor_str_to_enum<std::string, DistributorType>
+  {
+    {"DISTRIBUTOR_GAUSSIAN", DistributorType::DISTRIBUTOR_GAUSSIAN}
+  };
+
+  /// An enumerated type to allow for static typing of the updater type
+  enum UpdaterType
+  {
+    UPDATER_DIFF_DRIVE = 0,
+    UPDATER_ACKERMANN = 1
+  };
+
+  /// An unordered map to convert a string to an enumerated type
+  static constexpr std::unordered_map updater_str_to_enum<std::string, UpdaterType>
+  {
+    {"UPDATER_DIFF_DRIVE", UpdaterType::UPDATER_DIFF_DRIVE},
+    {"UPDATER_ACKERMANN", UpdatedType::UPDATER_ACKERMANN}
+  };
+
+  /// An enumerated type to allow for static typing of the scorer type
+  enum ScorerType
+  {
+    SCORER_LIKELIHOOD_FIELD = 0
+  };
+
+  /// An unordered map to convert a string to an enumerated type
+  static constexpr std::unordered_map scorer_str_to_enum<std::string, ScorerType>
+  {
+    "SCORER_LIKELIHOOD_FIELD", ScorerType::SCORER_LIKELIHOOD_FIELD
+  };
+
+  /// An enumerated type to allow for static typing of the resampler type
+  enum ResamplerType
+  {
+    RESAMPLER_LOW_VARIANCE = 0
+  };
+
+  /// An unordered map to convert a string to an enumerated type
+  static constexpr std::unordered_map resampler_str_to_enum<std::string, ResamplerType>
+  {
+    "RESAMPLER_LOW_VARIANCE", ResamplerType::RESAMPLER_LOW_VARIANCE
+  };
+
+  /// An enumerated type to allow for static typing of the pose extractor type
+  enum PoseExtractorType
+  {
+    POSE_EXTRACTOR_WEIGHTED_MEAN = 0
+  };
+
+  /// An unordered map to convert a string to an enumerated type
+  static constexpr std::unordered_map pose_extractor_str_to_enum<std::string, PoseExtractorType>
+  {
+    "POSE_EXTRACTOR_WEIGHTED_MEAN", PoseExtractorType::POSE_EXTRACTOR_WEIGHTED_MEAN
+  };
+};
+
+} // namespace mcl
+
+#endif  // MCL_PARTICLE_FILTER_PARAMS_H

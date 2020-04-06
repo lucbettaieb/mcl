@@ -1,0 +1,7 @@
+# gitignore
+
+bazel-mcl/*
+bazel-out
+bazel-testlogs
+bazel-bin
+bazel-genfiles
