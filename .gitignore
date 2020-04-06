@@ -1,6 +1,6 @@
 # gitignore
 
-bazel-mcl/*
+bazel-mcl/
 bazel-out
 bazel-testlogs
 bazel-bin
