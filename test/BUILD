@@ -1,0 +1,10 @@
+cc_test(
+    name="unit-tests",
+    srcs=glob(["unit/*.cpp"]),
+    copts=["-Iexternal/googletest/googletest/include"],
+    deps=[
+        "//:mcl",
+        "@googletest//:gtest",
+    ],
+    timeout="short",
+)
