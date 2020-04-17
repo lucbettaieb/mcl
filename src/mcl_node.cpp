@@ -5,8 +5,7 @@
 
 #include "mcl/particle_filter.h"
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
   YAML::Node config = YAML::LoadFile(argv[1]);
 
   mcl::ParticleFilter pf_{config};

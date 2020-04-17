@@ -10,15 +10,20 @@
 #include "particle_filter_params.h"
 #include "particles.h"
 
-namespace mcl
-{
+// MCL Stages
+#include "stages/distributor.h"
+#include "stages/extractor.h"
+#include "stages/resampler.h"
+#include "stages/scorer.h"
+#include "stages/updater.h"
 
-class ParticleFilter
-{
-public:
+namespace mcl {
+
+class ParticleFilter {
+ public:
   /**
    * @brief Constructor for the particle filter
-   * 
+   *
    * @param params  Parameters for the particle filter
    */
   explicit ParticleFilter(const ParticleFilterParams& params);
@@ -26,24 +31,24 @@ public:
   /// A function to execute the particle filter
   void execute();
 
-private:
+ private:
   /// Parameters for the particle filter
   const ParticleFilterParams params_;
 
-  // const Distributor distributor;
+  const stages::Distributor::Ptr distributor;
 
-  // const Updater updater;
+  const stages::Updater::Ptr updater;
 
-  // const Scorer scorer;
+  const stages::Scorer::Ptr scorer;
 
-  // const Resampler resampler;
+  const stages::Resampler::Ptr resampler;
 
-  // const PoseExtractor pose_extractor;
+  const stages::Extractor::Ptr extractor;
 
   /// The particles that the filter will operate on
   ParticleArray particles_;
 };
 
-} // namespace mcl
+}  // namespace mcl
 
 #endif  // MCL_PARTICLE_FILTER_H

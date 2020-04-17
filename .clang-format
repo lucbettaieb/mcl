@@ -1,0 +1,13 @@
+BasedOnStyle: Google
+TabWidth: 2
+ColumnLimit: 120
+Language: Cpp
+Standard: Cpp11
+AlignEscapedNewlinesLeft: false
+AllowShortBlocksOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+BinPackArguments: false
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
