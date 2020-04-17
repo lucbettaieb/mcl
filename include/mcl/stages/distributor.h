@@ -23,7 +23,7 @@ class Distributor {
 
   virtual ~Distributor();
 
-  virtual void distribute(ParticleArray::iterator begin, ParticleArray::iterator end);
+  virtual void distribute(ParticleArray::iterator begin, ParticleArray::iterator end) = 0;
 };
 }  // namespace stages
 }  // namespace mcl
