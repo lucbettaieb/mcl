@@ -13,10 +13,23 @@ namespace mcl {
 
 static constexpr size_t N_PARTICLES = 500;
 
+// TODO(lucbettaieb): Consider making this a virtual class and then implementing a PoseState w/ type trait checking
 /// The state that we are trying to track
-struct State  // TODO(lucbettaieb): Consider making this a virtual class and then implementing a PoseState w/ type trait
-              // checking
-{
+struct State {
+  /**
+   * @brief Constructor to construct a state with a YAML node
+   * 
+   * @param config  The YAML node from which to construct the state from
+   */
+  State(const YAML::Node& config) :
+    x(config["x"].as<double>()),
+    y(config["y"].as<double>()),
+    theta(config["theta"].as<double>())
+  {}
+
+  /// Default constructor for the State
+  State() = default;
+
   /// The x position of the position to be tracked
   double x;
 

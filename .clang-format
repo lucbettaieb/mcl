@@ -9,5 +9,9 @@ AllowShortCaseLabelsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: false
 AllowShortIfStatementsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+
+BreakConstructorInitializers: AfterColon
+
 BinPackArguments: false
-ConstructorInitializerAllOnOneLineOrOnePerLine: true
+BinPackParameters: false

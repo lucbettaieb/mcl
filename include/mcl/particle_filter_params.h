@@ -23,7 +23,7 @@ struct ParticleFilterParams {
         updater_type_(updater_str_to_enum.at(config["updater_type"].as<std::string>())),
         scorer_type_(scorer_str_to_enum.at(config["scorer_type"].as<std::string>())),
         resampler_type_(resampler_str_to_enum.at(config["resampler_type"].as<std::string>())),
-        pose_extractor_type_(pose_extractor_str_to_enum.at(config["pose_extractor_type"].as<std::string>())) {
+        extractor_type_(extractor_str_to_enum.at(config["extractor_type"].as<std::string>())) {
   }
 
  private:
@@ -56,11 +56,11 @@ struct ParticleFilterParams {
       {"RESAMPLER_LOW_VARIANCE", ResamplerType::RESAMPLER_LOW_VARIANCE}};
 
   /// An enumerated type to allow for static typing of the pose extractor type
-  enum PoseExtractorType { POSE_EXTRACTOR_WEIGHTED_MEAN = 0 };
+  enum ExtractorType { EXTRACTOR_WEIGHTED_MEAN = 0 };
 
   /// An unordered map to convert a string to an enumerated type
-  const std::unordered_map<std::string, PoseExtractorType> pose_extractor_str_to_enum{
-      {"POSE_EXTRACTOR_WEIGHTED_MEAN", PoseExtractorType::POSE_EXTRACTOR_WEIGHTED_MEAN}};
+  const std::unordered_map<std::string, ExtractorType> extractor_str_to_enum{
+      {"EXTRACTOR_WEIGHTED_MEAN", ExtractorType::EXTRACTOR_WEIGHTED_MEAN}};
 
   /// The type of distributor to use in the particle filter
   const DistributorType distributor_type_;
@@ -75,7 +75,7 @@ struct ParticleFilterParams {
   const ResamplerType resampler_type_;
 
   /// The type of pose extrator  to use in the particle filter
-  const PoseExtractorType pose_extractor_type_;
+  const ExtractorType extractor_type_;
 };
 
 }  // namespace mcl

@@ -1,0 +1,14 @@
+mcl:
+  distributor_type: "DISTRIBUTOR_GAUSSIAN"
+  extractor_type:  "EXTRACTOR_WEIGHED_MEAN"
+  resampler_type: "RESAMPLER_LOW_VARIANCE"
+  scorer_type: "SCORER_LIKELIHOOD_FIELD"
+  updater_type: "UPDATER_DIFF_DRIVE"
+
+  distributor:
+    standard_deviation:
+      x: 0.5
+      y: 0.5
+      theta: 0.5
+    gaussian_distributor:
+      seed: -1   # Use -1 for current time as a seed

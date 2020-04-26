@@ -16,15 +16,53 @@ namespace mcl {
 namespace stages {
 namespace distributors {
 
+struct GaussianDistributorParams : DistributorParams {
+  /**
+   * @brief Constructor for the GaussianDistributorParams
+   * 
+   * @param config  The YAML Node from which to load the configuration
+   */
+  GaussianDistributorParams(const YAML::Node& config) :
+    DistributorParams(config),
+  {}
+
+  /// A seed for the random number generator (-1 --> time)
+  int32_t seed_;
+};
+
 class GaussianDistributor : public Distributor {
  public:
-  typedef Distributor super;
+  /**
+   * @brief Constructor for the GaussianDistributor
+   * 
+   * @param params  A parameter struct for the GaussianDistributor
+   */
+  explicit GaussianDistributor(const GaussianDistributorParams& params);
 
-  explicit GaussianDistributor() = default;
-
+  /// Destruction for the GaussianDistributor
   virtual ~GaussianDistributor();
 
-  void distribute(ParticleArray::iterator begin, ParticleArray::iterator end);
+  /**
+   * @brief Distributes the particles about an initial_state in a normal distribution
+   * 
+   * @param initial_state  The initial state to function as the mean of the normal distribution
+   * @param begin  The beginning of the particle array
+   * @param end  The end of the particle array
+   */
+  void distribute(const mcl::State& initial_state, ParticleArray::iterator begin, ParticleArray::iterator end);
+
+ private:
+  /// A helper function to initialize the mt19937 PRNG
+  std::mt19937 initializeGenerator(int32_t seed) {
+    if (seed == -1) {
+      return std::mt19937(std::chrono::system_clock::now().time_since_epoch().count())
+    } else {
+      return std::mt19937(seed);
+    }
+  }
+
+  /// A mersenne-prime twister probabilistic random number generator
+  std::mt19937 generator_;
 };
 
 }  // namespace distributors
