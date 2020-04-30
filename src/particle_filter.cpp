@@ -8,9 +8,9 @@
 namespace mcl {
 
 ParticleFilter::ParticleFilter(const ParticleFilterParams& params) : params_(params) {
-  
 }
 
-void ParticleFilter::execute() { }
+void ParticleFilter::execute() {
+}
 
 }  // namespace mcl

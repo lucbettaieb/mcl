@@ -13,7 +13,8 @@ namespace stages {
 namespace distributors {
 
 GaussianDistributor::GaussianDistributor(const GaussianDistributorParams& params) :
-    params_(params), generator_(initializeGenerator(params.seed)) {
+    params_(params),
+    generator_(initializeGenerator(params.seed)) {
 }
 
 void GaussianDistributor::distribute(const mcl::State& initial_state,
@@ -24,7 +25,7 @@ void GaussianDistributor::distribute(const mcl::State& initial_state,
   std::normal_distribution<double> y_distribution{initial_state.y, params_.stddev_y};
   std::normal_distribution<double> theta_distribution{initial_state.theta, params_.stddev_theta};
 
-  // Iterate over all particles and assign their state to 
+  // Iterate over all particles and assign their state to
   for (ParticleArray::iterator it = begin; it != end; ++it) {
     (*it).importance = 1.0;
 
