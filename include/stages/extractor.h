@@ -10,7 +10,10 @@
 #include <memory>
 
 // MCL
-#include "../particles.h"
+#include "mcl/particles.h"
+
+// YAML
+#include <yaml-cpp/yaml.h>
 
 namespace mcl {
 namespace stages {

@@ -9,8 +9,11 @@
 // C++ Standard Library
 #include <memory>
 
+// YAML
+#include <yaml-cpp/yaml.h>
+
 // MCL
-#include "../particles.h"
+#include "mcl/particles.h"
 
 namespace mcl {
 namespace stages {
@@ -27,7 +30,7 @@ struct DistributorParams {
   {}
 
   /// Destructor for the DistributorParams
-  virtual ~DistributorParams();
+  virtual ~DistributorParams() = default;
 
   /// The standard deviations for all elements in the state
   State stddev;
@@ -37,12 +40,11 @@ class Distributor {
  public:
   typedef std::shared_ptr<Distributor> Ptr;
 
-  // delete me?
-  explicit Distributor() = default;
+  virtual ~Distributor() = default;
 
-  virtual ~Distributor();
-
-  virtual void distribute(ParticleArray::iterator begin, ParticleArray::iterator end) = 0;
+  virtual void distribute(const mcl::State& initial_state,
+                          ParticleArray::iterator begin,
+                          ParticleArray::iterator end) = 0;
 };
 }  // namespace stages
 }  // namespace mcl

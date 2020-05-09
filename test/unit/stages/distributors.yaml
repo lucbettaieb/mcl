@@ -1,0 +1,8 @@
+distributor:
+  standard_deviation:
+    x: 0.25
+    y: 0.25
+    theta: 0.1
+
+gaussian_distributor:
+  seed: 1

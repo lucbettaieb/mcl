@@ -1,8 +1,9 @@
 # MCL
 cc_library(
   name="mcl",
-  hdrs=glob(["include/mcl/**/*"]),
-  srcs=glob(["src/particle_filter.cpp"]),
+  hdrs=glob(["include/**/*"]),
+  srcs=glob(["src/**/*.cpp"]),
+  strip_include_prefix="include",
   include_prefix="mcl",
   deps=[
     "@yaml-cpp//:yaml-cpp",

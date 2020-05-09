@@ -3,7 +3,7 @@
  * BSD-Licensed
  */
 
-#include "mcl/include/mcl/particle_filter.h"
+#include "mcl/particle_filter.h"
 
 namespace mcl {
 

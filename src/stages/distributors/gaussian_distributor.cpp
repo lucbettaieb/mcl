@@ -21,13 +21,13 @@ void GaussianDistributor::distribute(const mcl::State& initial_state,
                                      ParticleArray::iterator begin,
                                      ParticleArray::iterator end) {
   // This will distribute particles about an initial state according in a gaussian distribution
-  std::normal_distribution<double> x_distribution{initial_state.x, params_.stddev_x};
-  std::normal_distribution<double> y_distribution{initial_state.y, params_.stddev_y};
-  std::normal_distribution<double> theta_distribution{initial_state.theta, params_.stddev_theta};
+  std::normal_distribution<double> x_distribution{initial_state.x, params_.stddev.x};
+  std::normal_distribution<double> y_distribution{initial_state.y, params_.stddev.y};
+  std::normal_distribution<double> theta_distribution{initial_state.theta, params_.stddev.theta};
 
   // Iterate over all particles and assign their state to
   for (ParticleArray::iterator it = begin; it != end; ++it) {
-    (*it).importance = 1.0;
+    (*it).weight = 1.0;
 
     // TODO(luc): make state more generic
     (*it).state.x = x_distribution(generator_);
@@ -39,5 +39,3 @@ void GaussianDistributor::distribute(const mcl::State& initial_state,
 }  // namespace distributors
 }  // namespace stages
 }  // namespace mcl
-
-#endif  // MCL_DISTRIBUTOR_H

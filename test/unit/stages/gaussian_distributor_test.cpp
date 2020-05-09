@@ -11,14 +11,11 @@
 
 // using namespace mcl;
 
-TEST(GaussianDistributorTest, TestTest)
+TEST(GaussianDistributorTest, ConstructorTest)
 {
-  std::cout << "?" << std::endl;
-  ASSERT_TRUE(true);
-}
+  const YAML::Node test_config = YAML::LoadFile("test/unit/stages/distributors.yaml");
+  mcl::stages::distributors::GaussianDistributorParams p{test_config};
 
-int main(int argc, char **argv)
-{
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+  mcl::stages::distributors::GaussianDistributor dist{p};
+  ASSERT_TRUE(true);
 }
