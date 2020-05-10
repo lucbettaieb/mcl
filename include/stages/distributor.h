@@ -38,6 +38,7 @@ struct DistributorParams {
 
 class Distributor {
  public:
+  /// Convenience typedef for a shared pointer to the class
   typedef std::shared_ptr<Distributor> Ptr;
 
   virtual ~Distributor() = default;

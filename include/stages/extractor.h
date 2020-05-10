@@ -9,24 +9,41 @@
 // C++ Standard Library
 #include <memory>
 
-// MCL
-#include "mcl/particles.h"
-
 // YAML
 #include <yaml-cpp/yaml.h>
+
+// MCL
+#include "mcl/particles.h"
 
 namespace mcl {
 namespace stages {
 
+/// Base parameter struct for the extractor
+struct ExtractorParams {
+  /**
+   * @brief Constructor for the ExtractorParams
+   * 
+   * @param config  A YAML config node from which to load parameters
+   */
+  ExtractorParams(const YAML::Node& config)
+  {}
+
+  /// Destructor for the ExtractorParams
+  virtual ~ExtractorParams() = default;
+};
+
 class Extractor {
  public:
+  /// Convenience typedef for a shared pointer to the class
   typedef std::shared_ptr<Extractor> Ptr;
 
-  explicit Extractor();
-
+  /// Destructor for the extractor
   virtual ~Extractor();
 
-  virtual void extractState(ParticleArray::iterator begin, ParticleArray::iterator end) = 0;
+  /// Function prototype for the extractor
+  virtual void extract(ParticleArray::iterator begin,
+                       ParticleArray::iterator end,
+                       mcl::State* extracted_state) = 0;
 };
 }  // namespace stages
 }  // namespace mcl

@@ -9,23 +9,37 @@
 // C++ Standard Library
 #include <memory>
 
-// MCL
-#include "mcl/particles.h"
-
 // YAML
 #include <yaml-cpp/yaml.h>
+
+// MCL
+#include "mcl/particles.h"
 
 namespace mcl {
 namespace stages {
 
+/// Base parameter struct for the resampler
+struct ResamplerParams {
+  /**
+   * @brief Constructor for the ResamplerParams
+   * 
+   * @param config  A YAML config node from which to load parameters
+   */
+  ResamplerParams(const YAML::Node& config)
+  {}
+
+  /// Destructor for the ResamplerParams
+  virtual ~ResamplerParams() = default;
+};
+
 class Resampler {
  public:
+  /// Convenience typedef for a shared pointer to the class
   typedef std::shared_ptr<Resampler> Ptr;
-
-  explicit Resampler();
 
   virtual ~Resampler();
 
+  /// Function prototype for the resampler
   virtual void resample(ParticleArray::iterator begin, ParticleArray::iterator end) = 0;
 };
 }  // namespace stages

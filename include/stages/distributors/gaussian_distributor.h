@@ -22,7 +22,7 @@ namespace mcl {
 namespace stages {
 namespace distributors {
 
-struct GaussianDistributorParams : DistributorParams {
+struct GaussianDistributorParams : public DistributorParams {
   /**
    * @brief Constructor for the GaussianDistributorParams
    * 
@@ -46,7 +46,7 @@ class GaussianDistributor : public Distributor {
    */
   explicit GaussianDistributor(const GaussianDistributorParams& params);
 
-  /// Destruction for the GaussianDistributor
+  /// Destructor for the GaussianDistributor
   ~GaussianDistributor() = default;
 
   /**

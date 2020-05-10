@@ -9,23 +9,38 @@
 // C++ Standard Library
 #include <memory>
 
-// MCL
-#include "mcl/particles.h"
-
 // YAML
 #include <yaml-cpp/yaml.h>
+
+// MCL
+#include "mcl/particles.h"
 
 namespace mcl {
 namespace stages {
 
+/// Base parameter struct for the updater
+struct UpdaterParams {
+  /**
+   * @brief Constructor for the UpdaterParams
+   * 
+   * @param config  A YAML config node from which to load parameters
+   */
+  UpdaterParams(const YAML::Node& config)
+  {}
+
+  /// Destructor for the UpdaterParams
+  virtual ~UpdaterParams() = default;
+};
+
 class Updater {
  public:
+  /// Convenience typedef for a shared pointer to the class
   typedef std::shared_ptr<Updater> Ptr;
 
-  explicit Updater();
-
+  /// Destructor for the updater
   virtual ~Updater();
 
+  /// Function prototype for the updater
   virtual void update(ParticleArray::iterator begin, ParticleArray::iterator end) = 0;
 };
 
