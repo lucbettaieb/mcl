@@ -32,9 +32,6 @@ class ParticleFilter {
   void execute();
 
  private:
-  /// Parameters for the particle filter
-  const ParticleFilterParams params_;
-
   /// The distributor to run in the particle filter
   const stages::Distributor::Ptr distributor;
 
@@ -49,6 +46,9 @@ class ParticleFilter {
 
   /// The extractor to run in the particle filter
   const stages::Extractor::Ptr extractor;
+
+  /// Parameters for the particle filter
+  const ParticleFilterParams params_;
 
   /// The particles that the filter will operate on
   ParticleArray particles_;

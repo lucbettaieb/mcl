@@ -28,6 +28,14 @@ struct State {
   {}
 
   /// Default constructor for the State
+  State(double x,
+        double y,
+        double theta) : 
+    x(x),
+    y(y),
+    theta(theta)
+  {}
+
   State() = default;
 
   /// The x position of the position to be tracked
@@ -41,6 +49,13 @@ struct State {
 };
 
 struct Particle {
+  Particle(const State& state, double weight) :
+    state(state),
+    weight(weight)
+  {}
+
+  Particle() = default;
+
   /// The hypothesized state of the system according to this particle
   State state;
 
