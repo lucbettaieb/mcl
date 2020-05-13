@@ -38,7 +38,7 @@ class Updater {
   typedef std::shared_ptr<Updater> Ptr;
 
   /// Destructor for the updater
-  virtual ~Updater();
+  virtual ~Updater() = default;
 
   /// Function prototype for the updater
   virtual void update(ParticleArray::iterator begin, ParticleArray::iterator end) = 0;

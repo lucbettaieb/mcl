@@ -10,13 +10,13 @@
 
 TEST(ParticleFilterParamsTest, TestTest)
 {
-  std::cout << "?" << std::endl;
+  // std::cout << "?" << std::endl;
   ASSERT_TRUE(true);
 }
 
 int main(int argc, char **argv)
 {
-  std::cout << "??" << std::endl;
+  // std::cout << "??" << std::endl;
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

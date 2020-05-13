@@ -38,7 +38,7 @@ class Scorer {
   typedef std::shared_ptr<Scorer> Ptr;
 
   /// Destructor for the scorer
-  virtual ~Scorer();
+  virtual ~Scorer() = default;
 
   /// Function prototype for the scorer
   virtual void score(ParticleArray::iterator begin, ParticleArray::iterator end) = 0;

@@ -37,7 +37,7 @@ class Resampler {
   /// Convenience typedef for a shared pointer to the class
   typedef std::shared_ptr<Resampler> Ptr;
 
-  virtual ~Resampler();
+  virtual ~Resampler() = default;
 
   /// Function prototype for the resampler
   virtual void resample(ParticleArray::iterator begin, ParticleArray::iterator end) = 0;

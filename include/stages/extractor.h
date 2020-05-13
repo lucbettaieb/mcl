@@ -38,7 +38,7 @@ class Extractor {
   typedef std::shared_ptr<Extractor> Ptr;
 
   /// Destructor for the extractor
-  virtual ~Extractor();
+  virtual ~Extractor() = default;
 
   /// Function prototype for the extractor
   virtual void extract(ParticleArray::iterator begin,

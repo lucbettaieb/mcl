@@ -56,6 +56,9 @@ class UnimodalExtractor : public Extractor {
 
  private:
 
+  /// Parameters for the unimodal mean extractor
+  UnimodalExtractorParams params_;
+
 };
 
 }  // namespace extractors
