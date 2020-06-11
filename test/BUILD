@@ -8,6 +8,8 @@ cc_test(
     ],
     timeout="short",
     data=[
-      "unit/stages/distributors.yaml"
+      "config/particle_filter.yaml",
+      "config/distributors.yaml",
+      "config/extractors.yaml"
     ],
 )

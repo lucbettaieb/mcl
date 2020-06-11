@@ -22,11 +22,11 @@ namespace stages {
 struct UpdaterParams {
   /**
    * @brief Constructor for the UpdaterParams
-   * 
+   *
    * @param config  A YAML config node from which to load parameters
    */
-  UpdaterParams(const YAML::Node& config)
-  {}
+  UpdaterParams(const YAML::Node& config) {
+  }
 
   /// Destructor for the UpdaterParams
   virtual ~UpdaterParams() = default;

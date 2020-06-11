@@ -1,0 +1,5 @@
+distributor_type: "DISTRIBUTOR_GAUSSIAN"
+updater_type: "UPDATER_DIFF_DRIVE"
+scorer_type: "SCORER_LIKELIHOOD_FIELD"
+resampler_type: "RESAMPLER_LOW_VARIANCE"
+extractor_type:  "EXTRACTOR_WEIGHTED_MEAN"

@@ -6,17 +6,12 @@
 // GTest
 #include <gtest/gtest.h>
 
-// using namespace mcl;
+// MCL
+#include "mcl/particle_filter_params.h"
 
-TEST(ParticleFilterParamsTest, TestTest)
+TEST(ParticleFilterParamsTest, ConstructorTest)
 {
-  // std::cout << "?" << std::endl;
+  const YAML::Node test_config = YAML::LoadFile("test/config/particle_filter.yaml");
+  mcl::ParticleFilterParams params(test_config);
   ASSERT_TRUE(true);
-}
-
-int main(int argc, char **argv)
-{
-  // std::cout << "??" << std::endl;
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
 }

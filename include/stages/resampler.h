@@ -22,11 +22,11 @@ namespace stages {
 struct ResamplerParams {
   /**
    * @brief Constructor for the ResamplerParams
-   * 
+   *
    * @param config  A YAML config node from which to load parameters
    */
-  ResamplerParams(const YAML::Node& config)
-  {}
+  ResamplerParams(const YAML::Node& config) {
+  }
 
   /// Destructor for the ResamplerParams
   virtual ~ResamplerParams() = default;

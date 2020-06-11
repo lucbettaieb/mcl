@@ -9,11 +9,9 @@
 // MCL
 #include "mcl/stages/distributors/gaussian_distributor.h"
 
-// using namespace mcl;
-
 TEST(GaussianDistributorTest, ConstructorTest)
 {
-  const YAML::Node test_config = YAML::LoadFile("test/unit/stages/distributors.yaml");
+  const YAML::Node test_config = YAML::LoadFile("test/config/distributors.yaml");
   mcl::stages::distributors::GaussianDistributorParams p{test_config};
 
   mcl::stages::distributors::GaussianDistributor dist{p};
@@ -22,7 +20,7 @@ TEST(GaussianDistributorTest, ConstructorTest)
 
 TEST(GaussianDistributorTest, DistributeTest)
 {
-  const YAML::Node test_config = YAML::LoadFile("test/unit/stages/distributors.yaml");
+  const YAML::Node test_config = YAML::LoadFile("test/config/distributors.yaml");
   mcl::stages::distributors::GaussianDistributorParams params{test_config};
 
   mcl::stages::distributors::GaussianDistributor dist{params};

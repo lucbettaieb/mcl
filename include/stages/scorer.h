@@ -22,11 +22,11 @@ namespace stages {
 struct ScorerParams {
   /**
    * @brief Constructor for the ScorerParams
-   * 
+   *
    * @param config  A YAML config node from which to load parameters
    */
-  ScorerParams(const YAML::Node& config)
-  {}
+  ScorerParams(const YAML::Node& config) {
+  }
 
   /// Destructor for the ScorerParams
   virtual ~ScorerParams() = default;
