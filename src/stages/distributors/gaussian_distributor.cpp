@@ -28,12 +28,12 @@ void GaussianDistributor::distribute(const mcl::State& initial_state,
 
   // Iterate over all particles and assign their state to
   for (ParticleArray::iterator it = begin; it != end; ++it) {
-    (*it).weight = 1.0;
+    it->weight = 1.0;
 
     // TODO(luc): make state more generic
-    (*it).state.x = x_distribution(generator_);
-    (*it).state.y = y_distribution(generator_);
-    (*it).state.theta = theta_distribution(generator_);
+    it->state.x = x_distribution(generator_);
+    it->state.y = y_distribution(generator_);
+    it->state.theta = theta_distribution(generator_);
   }
 }
 

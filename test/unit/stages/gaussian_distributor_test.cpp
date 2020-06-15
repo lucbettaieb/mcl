@@ -9,8 +9,7 @@
 // MCL
 #include "mcl/stages/distributors/gaussian_distributor.h"
 
-TEST(GaussianDistributorTest, ConstructorTest)
-{
+TEST(GaussianDistributorTest, ConstructorTest) {
   const YAML::Node test_config = YAML::LoadFile("test/config/distributors.yaml");
   mcl::stages::distributors::GaussianDistributorParams p{test_config};
 
@@ -18,8 +17,7 @@ TEST(GaussianDistributorTest, ConstructorTest)
   ASSERT_TRUE(true);
 }
 
-TEST(GaussianDistributorTest, DistributeTest)
-{
+TEST(GaussianDistributorTest, DistributeTest) {
   const YAML::Node test_config = YAML::LoadFile("test/config/distributors.yaml");
   mcl::stages::distributors::GaussianDistributorParams params{test_config};
 
@@ -39,14 +37,14 @@ TEST(GaussianDistributorTest, DistributeTest)
   double sum_err_theta = 0.0;
 
   for (const mcl::Particle& p : particles) {
-    sum_err_x += (p.state.x - mean.x)*(p.state.x - mean.x);
-    sum_err_y += (p.state.y - mean.y)*(p.state.y - mean.y);
-    sum_err_theta += (p.state.theta - mean.theta)*(p.state.theta - mean.theta);
+    sum_err_x += (p.state.x - mean.x) * (p.state.x - mean.x);
+    sum_err_y += (p.state.y - mean.y) * (p.state.y - mean.y);
+    sum_err_theta += (p.state.theta - mean.theta) * (p.state.theta - mean.theta);
   }
 
-  const double recovered_stddev_x = std::sqrt((1.0 / static_cast<double>(particles.size()-1)) * sum_err_x);
-  const double recovered_stddev_y = std::sqrt((1.0 / static_cast<double>(particles.size()-1)) * sum_err_y);
-  const double recovered_stddev_theta = std::sqrt((1.0 / static_cast<double>(particles.size()-1)) * sum_err_theta);
+  const double recovered_stddev_x = std::sqrt((1.0 / static_cast<double>(particles.size() - 1)) * sum_err_x);
+  const double recovered_stddev_y = std::sqrt((1.0 / static_cast<double>(particles.size() - 1)) * sum_err_y);
+  const double recovered_stddev_theta = std::sqrt((1.0 / static_cast<double>(particles.size() - 1)) * sum_err_theta);
 
   const double recovery_error = 0.05;
 
