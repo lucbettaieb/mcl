@@ -75,5 +75,4 @@ TEST(UnimodalExtractorTest, ExtractTest) {
       }
     }
   }
-
 }

@@ -16,7 +16,6 @@ UnimodalExtractor::UnimodalExtractor(const UnimodalExtractorParams& params) : pa
 void UnimodalExtractor::extract(ParticleArray::iterator begin,
                                 ParticleArray::iterator end,
                                 mcl::State* extracted_state) {
-
   // TODO(enhancement): Use an iterator over the state in order to make it independent of the state's contents!
 
   double x_bar = 0.0;

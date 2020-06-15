@@ -47,7 +47,7 @@ class UnimodalExtractor : public Extractor {
   /**
    * @brief Extracts the state from the distribution.  This extractor does this by assuming the distribution is unimodal
    *        and calculating the weighted mean.  The weighted mean is then assumed to be the resultant state.
-   * 
+   *
    * @param begin  The beginning of the particle array
    * @param end  The end of the particle array
    * @param[out] extracted_state  The extracted state from the distribution
@@ -55,10 +55,8 @@ class UnimodalExtractor : public Extractor {
   void extract(ParticleArray::iterator begin, ParticleArray::iterator end, mcl::State* extracted_state);
 
  private:
-
   /// Parameters for the unimodal mean extractor
   UnimodalExtractorParams params_;
-
 };
 
 }  // namespace extractors
