@@ -10,6 +10,7 @@ cc_test(
     data=[
       "config/particle_filter.yaml",
       "config/distributors.yaml",
-      "config/extractors.yaml"
+      "config/extractors.yaml",
+      "config/resamplers.yaml"
     ],
 )

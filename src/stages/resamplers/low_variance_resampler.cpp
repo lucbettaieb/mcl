@@ -15,7 +15,6 @@ namespace resamplers {
 
 LowVarianceResampler::LowVarianceResampler(const LowVarianceResamplerParams& params) :
     params_(params) {
-      
 }
 
 void LowVarianceResampler::resample(ParticleArray::iterator begin,
