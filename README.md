@@ -3,3 +3,12 @@
 very much under development
 
 ![hello my name mcl](https://i.imgur.com/h1nnoFy.png)
+
+### Building
+```
+$ bazel build ...
+```
+### Testing
+```
+$ bazel test test:unit-tests --test_output=all
+```

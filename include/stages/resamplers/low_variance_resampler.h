@@ -6,9 +6,11 @@
 #ifndef MCL_STAGES_RESAMPLERS_LOW_VARIANCE_RESAMPLER
 #define MCL_STAGES_RESAMPLERS_LOW_VARIANCE_RESAMPLER
 
+#include "mcl/stages/resampler.h"
+
 namespace mcl {
 namespace stages {
-namespace extractors {
+namespace resamplers {
 
 struct LowVarianceResamplerParams : public ResamplerParams {
   /**
@@ -16,11 +18,16 @@ struct LowVarianceResamplerParams : public ResamplerParams {
    *
    * @param config  The YAML Node from which to load the configuration
    */
-  LowVarianceResamplerParams(const YAML::Node& config) : ResamplerParams(config) {
+  LowVarianceResamplerParams(const YAML::Node& config) :
+      ResamplerParams(config),
+      seed(config["low_variance_resampler"]["seed"].as<int>()) {
   }
+
+  /// A seed for the random number generator used in the low variance resampling algorithm
+  int32_t seed;
 };
 
-class LowVarianceResampler : public Extractor {
+class LowVarianceResampler : public Resampler {
  public:
   /**
    * @brief Constructor for the LowVarianceResampler
@@ -33,7 +40,7 @@ class LowVarianceResampler : public Extractor {
   ~LowVarianceResampler() = default;
 
   /**
-   * @brief Performs low variance resampling 
+   * @brief Performs low variance resampling
    *
    * @param begin  The beginning of the particle array
    * @param end  The end of the particle array
@@ -45,7 +52,7 @@ class LowVarianceResampler : public Extractor {
   LowVarianceResamplerParams params_;
 };
 
-}  // namespace extractors
+}  // namespace resamplers
 }  // namespace stages
 }  // namespace mcl
 

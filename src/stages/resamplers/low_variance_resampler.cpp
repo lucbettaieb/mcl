@@ -3,6 +3,9 @@
  * BSD-Licensed
  */
 
+// C++ Standard Library
+#include <random>
+
 // MCL
 #include "mcl/stages/resamplers/low_variance_resampler.h"
 
@@ -17,27 +20,31 @@ LowVarianceResampler::LowVarianceResampler(const LowVarianceResamplerParams& par
 
 void LowVarianceResampler::resample(ParticleArray::iterator begin,
                                     ParticleArray::iterator end) {
-  const float factor = 1.0 / mcl::N_PARTICLES;
+  const double factor = 1.0 / mcl::N_PARTICLES;
 
-  std::uniform_real_distribution<float> distribution(range_from, range_to)
+  std::uniform_real_distribution<double> distribution(0, factor);
+  std::mt19937 gen(params_.seed);
+  const double r = distribution(gen);
 
-  const float r = factor * rngUniform(0, 1);
-  float c = p_[0].w;
-  float u;
+  double c = begin->weight;
+  size_t i = 0;
 
-  //! Do resamplig
-  for (uint32_t m = 0, i = 0; m < p_.size(); ++m)
-  {
-    u = r + factor * m;
-    while (u > c)
-    {
-      if (++i >= p_.size())
+  ParticleArray resampled_particles{};
+  ParticleArray::iterator iter = begin;
+
+  for (size_t m = 0; m < mcl::N_PARTICLES; m++) {
+    const double u = r + factor * m;
+    while (u > c) {
+      if (i++ >= mcl::N_PARTICLES) {
         break;
-      c += p_[i].w;
+      }
+      c += iter->weight;
     }
-    new_p[m] = p_[i];
-    new_p[m].w = factor;
+    resampled_particles[m] = (*iter);
+
+    iter++;
   }
+}
 
 }  // namespace resamplers
 }  // namespace stages
