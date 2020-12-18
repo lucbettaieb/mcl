@@ -97,7 +97,6 @@ TEST(LowVarianceResamplerTest, ResampleTest) {
   mean = mcl::State{1.7, 2.2, 0.504};
   dist.distribute(mean, particles.begin() + half_particlearray_size, particles.end());
 
-
   for (double i = 0; i < static_cast<double>(mcl::N_PARTICLES); i++) {
     if (i < half_particlearray_size) {
       particles.at(i).weight = 0.73;
@@ -109,7 +108,7 @@ TEST(LowVarianceResamplerTest, ResampleTest) {
   size_t i = 0;
   for (auto p : particles) {
     if (i < 5) {
-      std::cout << "[x: " << p.state.x << ", y: " << p.state.y  << ", th: " << p.state.theta << ", w: " << p.weight << "] ";
+      std::cout << "[x: " << p.state.x << ", y: " << p.state.y  << ", th: " << p.state.theta << ", w: " << p.weight << "] " << std::endl;
     }
     i++;
   }
@@ -121,11 +120,11 @@ TEST(LowVarianceResamplerTest, ResampleTest) {
   i = 0;
   for (auto p : particles) {
     if (i < 5) {
-      std::cout << "[x: " << p.state.x << ", y: " << p.state.y  << ", th: " << p.state.theta << ", w: " << p.weight << "] ";
+      std::cout << "[x: " << p.state.x << ", y: " << p.state.y  << ", th: " << p.state.theta << ", w: " << p.weight << "] " << std::endl;
     }
     i++;
   }
-  std::cout << std::endl;
+  std::cout << std::endl; 
 
   // double sum_err_x = 0.0;
   // double sum_err_y = 0.0;

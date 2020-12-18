@@ -5,7 +5,7 @@
 
 // C++ Standard Library
 #include <random>
-
+#include <iostream>
 // MCL
 #include "mcl/stages/resamplers/low_variance_resampler.h"
 
@@ -31,17 +31,21 @@ void LowVarianceResampler::resample(ParticleArray::iterator begin,
   ParticleArray resampled_particles{};
   ParticleArray::iterator iter = begin;
 
-  for (size_t m = 0; m < mcl::N_PARTICLES; m++) {
-    const double u = r + factor * m;
-    while (u > c) {
-      if (i++ >= mcl::N_PARTICLES) {
-        break;
-      }
+  for (size_t m = 1; m <= mcl::N_PARTICLES; m++) {
+    const double u = r + (m - 1) * factor;
+    while (u > c and i < mcl::N_PARTICLES) {
+      i++;
       c += iter->weight;
     }
-    resampled_particles[m] = (*iter);
+    resampled_particles[m-1] = (*iter);
 
     iter++;
+  }
+
+  i = 0;
+  for (iter = begin; iter != end; iter++) {
+    *iter = resampled_particles[i];
+    i++;
   }
 }
 

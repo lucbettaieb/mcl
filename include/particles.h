@@ -11,6 +11,8 @@
 
 namespace mcl {
 
+// Note: If you change this constant, some unit tests may fail as it has inherently influenced the outcome
+//       that they are expecting.
 static constexpr size_t N_PARTICLES = 500;
 
 // TODO(lucbettaieb): Consider making this a virtual class and then implementing a PoseState w/ type trait checking
