@@ -89,17 +89,19 @@ TEST(LowVarianceResamplerTest, ResampleNonZeroMeanZeroWeightTest) {
 }
 
 TEST(LowVarianceResamplerTest, ResampleTest) {
-  const YAML::Node test_config = YAML::LoadFile("test/config/resamplers.yaml");
-  mcl::stages::resamplers::LowVarianceResamplerParams p{test_config};
-
-  mcl::stages::resamplers::LowVarianceResampler resampler{p};
-
-  mcl::ParticleArray particles{};
+  const YAML::Node resampler_config = YAML::LoadFile("test/config/resamplers.yaml");
+  mcl::stages::resamplers::LowVarianceResamplerParams lvr_params{resampler_config};
+  mcl::stages::resamplers::LowVarianceResampler resampler{lvr_params};
 
   const YAML::Node distributor_config = YAML::LoadFile("test/config/distributors.yaml");
-  mcl::stages::distributors::GaussianDistributorParams params{distributor_config};
+  mcl::stages::distributors::GaussianDistributorParams gd_params{distributor_config};
+  mcl::stages::distributors::GaussianDistributor dist{gd_params};
 
-  mcl::stages::distributors::GaussianDistributor dist{params};
+  const YAML::Node extractor_config = YAML::LoadFile("test/config/extractors.yaml");
+  mcl::stages::extractors::UnimodalExtractorParams ue_params{extractor_config};
+  mcl::stages::extractors::UnimodalExtractor extractor{ue_params};
+
+  mcl::ParticleArray particles{};
 
   const size_t half_particlearray_size = static_cast<size_t>(mcl::N_PARTICLES / 2.0);
 
@@ -117,46 +119,30 @@ TEST(LowVarianceResamplerTest, ResampleTest) {
     }
   }
 
-  size_t i = 0;
-  for (auto p : particles) {
-    if (i < 5) {
-      // std::cout << "[x: " << p.state.x << ", y: " << p.state.y  << ", th: " << p.state.theta << ", w: " << p.weight << "] " << std::endl;
-    }
-    i++;
-  }
-  // std::cout << std::endl;
-  // std::cout << std::endl;
-
   resampler.resample(particles.begin(), particles.end());
 
-  i = 0;
-  for (auto p : particles) {
-    if (i < 5) {
-      // std::cout << "[x: " << p.state.x << ", y: " << p.state.y  << ", th: " << p.state.theta << ", w: " << p.weight << "] " << std::endl;
-    }
-    i++;
+  mcl::State extracted_state{};
+  extractor.extract(particles.begin(), particles.end(), &extracted_state);
+
+  double sum_err_x = 0.0;
+  double sum_err_y = 0.0;
+  double sum_err_theta = 0.0;
+
+  for (const mcl::Particle& p : particles) {
+    sum_err_x += (p.state.x - extracted_state.x) * (p.state.x - extracted_state.x);
+    sum_err_y += (p.state.y - extracted_state.y) * (p.state.y - extracted_state.y);
+    sum_err_theta += (p.state.theta - extracted_state.theta) * (p.state.theta - extracted_state.theta);
   }
-  // std::cout << std::endl; 
 
-  // double sum_err_x = 0.0;
-  // double sum_err_y = 0.0;
-  // double sum_err_theta = 0.0;
+  const double recovered_stddev_x = std::sqrt((1.0 / static_cast<double>(particles.size() - 1)) * sum_err_x);
+  const double recovered_stddev_y = std::sqrt((1.0 / static_cast<double>(particles.size() - 1)) * sum_err_y);
+  const double recovered_stddev_theta = std::sqrt((1.0 / static_cast<double>(particles.size() - 1)) * sum_err_theta);
 
-  // for (const mcl::Particle& p : particles) {
-  //   sum_err_x += (p.state.x - mean.x) * (p.state.x - mean.x);
-  //   sum_err_y += (p.state.y - mean.y) * (p.state.y - mean.y);
-  //   sum_err_theta += (p.state.theta - mean.theta) * (p.state.theta - mean.theta);
-  // }
+  // TODO(lucbettaieb): Make this test a bit more rigorous.
+  const double recovery_error = 0.05;
 
-  // const double recovered_stddev_x = std::sqrt((1.0 / static_cast<double>(particles.size() - 1)) * sum_err_x);
-  // const double recovered_stddev_y = std::sqrt((1.0 / static_cast<double>(particles.size() - 1)) * sum_err_y);
-  // const double recovered_stddev_theta = std::sqrt((1.0 / static_cast<double>(particles.size() - 1)) * sum_err_theta);
+  ASSERT_TRUE((recovered_stddev_x - gd_params.stddev.x) <= recovery_error);
+  ASSERT_TRUE((recovered_stddev_y - gd_params.stddev.y) <= recovery_error);
+  ASSERT_TRUE((recovered_stddev_theta - gd_params.stddev.theta) <= recovery_error);
 
-  // const double recovery_error = 0.05;
-
-  // ASSERT_TRUE(std::fabs(recovered_stddev_x - params.stddev.x) <= recovery_error);
-  // ASSERT_TRUE(std::fabs(recovered_stddev_y - params.stddev.y) <= recovery_error);
-  // ASSERT_TRUE(std::fabs(recovered_stddev_theta - params.stddev.theta) <= recovery_error);
 }
-
-
