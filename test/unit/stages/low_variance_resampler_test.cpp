@@ -9,6 +9,7 @@
 // MCL
 #include "mcl/stages/distributors/gaussian_distributor.h"
 #include "mcl/stages/resamplers/low_variance_resampler.h"
+#include "mcl/stages/extractors/unimodal_extractor.h"
 
 TEST(LowVarianceResamplerTest, ConstructorTest) {
   const YAML::Node test_config = YAML::LoadFile("test/config/resamplers.yaml");
@@ -19,6 +20,8 @@ TEST(LowVarianceResamplerTest, ConstructorTest) {
 }
 
 TEST(LowVarianceResamplerTest, ResampleZeroTest) {
+  const double recovery_error = 0.00001;
+
   const YAML::Node test_config = YAML::LoadFile("test/config/resamplers.yaml");
   mcl::stages::resamplers::LowVarianceResamplerParams p{test_config};
 
@@ -33,7 +36,10 @@ TEST(LowVarianceResamplerTest, ResampleZeroTest) {
   resampler.resample(particles.begin(), particles.end());
 
    for (const mcl::Particle& p : particles) {
-    ASSERT_TRUE(p.state.x == 0.0 and p.state.y == 0.0 and p.state.theta == 0.0 and p.weight == 0.0);
+    ASSERT_NEAR(p.state.x, 0.0, recovery_error);
+    ASSERT_NEAR(p.state.y, 0.0, recovery_error);
+    ASSERT_NEAR(p.state.theta, 0.0, recovery_error);
+    ASSERT_NEAR(p.weight, 0.0, recovery_error);
   }
 }
 
@@ -45,35 +51,41 @@ TEST(LowVarianceResamplerTest, ResampleNonZeroMeanZeroWeightTest) {
 
   mcl::ParticleArray particles{};
 
-  const YAML::Node distributor_config = YAML::LoadFile("test/config/distributors.yaml");
-  mcl::stages::distributors::GaussianDistributorParams params{distributor_config};
+  const YAML::Node config_yaml = YAML::LoadFile("test/config/distributors.yaml");
+  mcl::stages::distributors::GaussianDistributorParams gd_params{config_yaml};
+  mcl::stages::distributors::GaussianDistributor dist{gd_params};
 
-  mcl::stages::distributors::GaussianDistributor dist{params};
+  mcl::stages::extractors::UnimodalExtractorParams ue_params{config_yaml};
+  mcl::stages::extractors::UnimodalExtractor extractor{ue_params};
 
   mcl::State mean{1.0, 2.0, 0.707};
   dist.distribute(mean, particles.begin(), particles.end());
 
   resampler.resample(particles.begin(), particles.end());
 
+  mcl::State extracted_state{};
+  extractor.extract(particles.begin(), particles.end(), &extracted_state);
+
   double sum_err_x = 0.0;
   double sum_err_y = 0.0;
   double sum_err_theta = 0.0;
 
   for (const mcl::Particle& p : particles) {
-    sum_err_x += (p.state.x - mean.x) * (p.state.x - mean.x);
-    sum_err_y += (p.state.y - mean.y) * (p.state.y - mean.y);
-    sum_err_theta += (p.state.theta - mean.theta) * (p.state.theta - mean.theta);
+    sum_err_x += (p.state.x - extracted_state.x) * (p.state.x - extracted_state.x);
+    sum_err_y += (p.state.y - extracted_state.y) * (p.state.y - extracted_state.y);
+    sum_err_theta += (p.state.theta - extracted_state.theta) * (p.state.theta - extracted_state.theta);
   }
 
   const double recovered_stddev_x = std::sqrt((1.0 / static_cast<double>(particles.size() - 1)) * sum_err_x);
   const double recovered_stddev_y = std::sqrt((1.0 / static_cast<double>(particles.size() - 1)) * sum_err_y);
   const double recovered_stddev_theta = std::sqrt((1.0 / static_cast<double>(particles.size() - 1)) * sum_err_theta);
 
+  // TODO(lucbettaieb): Make this test a bit more rigorous.
   const double recovery_error = 0.05;
 
-  ASSERT_TRUE(std::fabs(recovered_stddev_x - params.stddev.x) <= recovery_error);
-  ASSERT_TRUE(std::fabs(recovered_stddev_y - params.stddev.y) <= recovery_error);
-  ASSERT_TRUE(std::fabs(recovered_stddev_theta - params.stddev.theta) <= recovery_error);
+  ASSERT_TRUE((recovered_stddev_x - gd_params.stddev.x) <= recovery_error);
+  ASSERT_TRUE((recovered_stddev_y - gd_params.stddev.y) <= recovery_error);
+  ASSERT_TRUE((recovered_stddev_theta - gd_params.stddev.theta) <= recovery_error);
 }
 
 TEST(LowVarianceResamplerTest, ResampleTest) {
@@ -99,32 +111,32 @@ TEST(LowVarianceResamplerTest, ResampleTest) {
 
   for (double i = 0; i < static_cast<double>(mcl::N_PARTICLES); i++) {
     if (i < half_particlearray_size) {
-      particles.at(i).weight = 0.73;
+      particles.at(i).weight = 0.20;
     } else {
-      particles.at(i).weight = 0.25;
+      particles.at(i).weight = 0.44;
     }
   }
 
   size_t i = 0;
   for (auto p : particles) {
     if (i < 5) {
-      std::cout << "[x: " << p.state.x << ", y: " << p.state.y  << ", th: " << p.state.theta << ", w: " << p.weight << "] " << std::endl;
+      // std::cout << "[x: " << p.state.x << ", y: " << p.state.y  << ", th: " << p.state.theta << ", w: " << p.weight << "] " << std::endl;
     }
     i++;
   }
-  std::cout << std::endl;
-  std::cout << std::endl;
+  // std::cout << std::endl;
+  // std::cout << std::endl;
 
   resampler.resample(particles.begin(), particles.end());
 
   i = 0;
   for (auto p : particles) {
     if (i < 5) {
-      std::cout << "[x: " << p.state.x << ", y: " << p.state.y  << ", th: " << p.state.theta << ", w: " << p.weight << "] " << std::endl;
+      // std::cout << "[x: " << p.state.x << ", y: " << p.state.y  << ", th: " << p.state.theta << ", w: " << p.weight << "] " << std::endl;
     }
     i++;
   }
-  std::cout << std::endl; 
+  // std::cout << std::endl; 
 
   // double sum_err_x = 0.0;
   // double sum_err_y = 0.0;

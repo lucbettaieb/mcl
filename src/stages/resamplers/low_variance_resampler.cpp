@@ -26,26 +26,24 @@ void LowVarianceResampler::resample(ParticleArray::iterator begin,
   const double r = distribution(gen);
 
   double c = begin->weight;
-  size_t i = 0;
 
   ParticleArray resampled_particles{};
+
   ParticleArray::iterator iter = begin;
 
   for (size_t m = 1; m <= mcl::N_PARTICLES; m++) {
     const double u = r + (m - 1) * factor;
-    while (u > c and i < mcl::N_PARTICLES) {
-      i++;
+    while (u > c and iter != end) {
+      ++iter;
       c += iter->weight;
     }
     resampled_particles[m-1] = (*iter);
-
-    iter++;
   }
 
-  i = 0;
-  for (iter = begin; iter != end; iter++) {
-    *iter = resampled_particles[i];
-    i++;
+  iter = begin;
+  for (const Particle& p : resampled_particles) {
+    *iter = p;
+    ++iter;
   }
 }
 
