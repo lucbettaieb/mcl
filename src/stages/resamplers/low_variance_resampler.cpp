@@ -6,6 +6,7 @@
 // C++ Standard Library
 #include <random>
 #include <iostream>
+
 // MCL
 #include "mcl/stages/resamplers/low_variance_resampler.h"
 

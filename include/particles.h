@@ -8,6 +8,7 @@
 
 // C++ Standard Library
 #include <array>
+#include <chrono>
 
 namespace mcl {
 
@@ -29,7 +30,7 @@ struct State {
     theta(config["theta"].as<double>())
   {}
 
-  /// Default constructor for the State
+  /// Initialization constructor for the State
   State(double x,
         double y,
         double theta) : 
@@ -48,6 +49,28 @@ struct State {
 
   /// The heading of the position to be tracked
   double theta;
+};
+
+// TODO(lucbettaieb): This should probably also be more generic, like the derivative of the state.
+struct Measurement {
+  /// Initialization constructor for the measurement
+  Measurement(double v,
+              double w,
+              const std::chrono::time_point& stamp) :
+    v(v),
+    w(w),
+    stamp(stamp) {}
+
+  Measurement() = default;
+
+  /// The observed linear velocity of the tracked position
+  double v;
+
+  /// The observed angular velocity of the tracked position
+  double w;
+
+  /// The time stamp of the measurment
+  std::chrono::time_point stamp;
 };
 
 struct Particle {

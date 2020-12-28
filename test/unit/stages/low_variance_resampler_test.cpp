@@ -144,5 +144,4 @@ TEST(LowVarianceResamplerTest, ResampleTest) {
   ASSERT_TRUE((recovered_stddev_x - gd_params.stddev.x) <= recovery_error);
   ASSERT_TRUE((recovered_stddev_y - gd_params.stddev.y) <= recovery_error);
   ASSERT_TRUE((recovered_stddev_theta - gd_params.stddev.theta) <= recovery_error);
-
 }

@@ -41,7 +41,10 @@ class Updater {
   virtual ~Updater() = default;
 
   /// Function prototype for the updater
-  virtual void update(ParticleArray::iterator begin, ParticleArray::iterator end) = 0;
+  // TODO(lucbettaieb): Consider making the measurement type generic
+  virtual void update(ParticleArray::iterator begin,
+                      ParticleArray::iterator end,
+                      const mcl::Measurement& measurement) = 0;
 };
 
 }  // namespace stages
