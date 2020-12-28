@@ -11,7 +11,7 @@ AllowShortIfStatementsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 
-BreakConstructorInitializers: BeforeComma
+BreakConstructorInitializers: AfterColon
 
 BinPackArguments: false
 BinPackParameters: false

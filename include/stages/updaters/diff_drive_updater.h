@@ -19,21 +19,27 @@ struct DiffDriveUpdaterParams : public UpdaterParams {
    * @param config  The YAML Node from which to load the configuration
    */
   DiffDriveUpdaterParams(const YAML::Node& config) :
-      DiffDriveUpdaterParams(config),
-      seed(config["diff_drive_updater"]["seed"].as<int>()) {
+      UpdaterParams(config),
+      seed(config["diff_drive_updater"]["seed"].as<int>()),
+      alpha_1(config["diff_drive_updater"]["alpha_1"].as<double>()),
+      alpha_2(config["diff_drive_updater"]["alpha_2"].as<double>()),
+      alpha_3(config["diff_drive_updater"]["alpha_3"].as<double>()),
+      alpha_4(config["diff_drive_updater"]["alpha_4"].as<double>()),
+      alpha_5(config["diff_drive_updater"]["alpha_5"].as<double>()),
+      alpha_6(config["diff_drive_updater"]["alpha_6"].as<double>()) {
   }
 
   /// A seed for the random number generator used when adding noise to the motion model
   int32_t seed;
 
-  double alpha_1_;
-  double alpha_2_;
+  double alpha_1;
+  double alpha_2;
 
-  double alpha_3_;
-  double alpha_4_;
+  double alpha_3;
+  double alpha_4;
 
-  double alpha_5_;
-  double alpha_6_;
+  double alpha_5;
+  double alpha_6;
 };
 
 class DiffDriveUpdater : public Updater {
@@ -43,7 +49,7 @@ class DiffDriveUpdater : public Updater {
    *
    * @param params  A parameter struct for the DiffDriveUpdater
    */
-  explicit DiffDriveUpdater(const DiffDriveUpdater& params);
+  explicit DiffDriveUpdater(const DiffDriveUpdaterParams& params);
 
   /// Destructor for the DiffDriveUpdater
   ~DiffDriveUpdater() = default;
@@ -58,11 +64,12 @@ class DiffDriveUpdater : public Updater {
   void update(ParticleArray::iterator begin, ParticleArray::iterator end, const mcl::Measurement& measurement);
 
  private:
-  /// The previous measurment for the diff drive system
-  std::chrono::time_point previous_stamp_;
-
   /// Parameters for the diff drive updater
   DiffDriveUpdaterParams params_;
+
+  /// The previous measurment for the diff drive system
+  std::chrono::time_point<std::chrono::system_clock> previous_stamp_;
+
 };
 
 }  // namespace updaters

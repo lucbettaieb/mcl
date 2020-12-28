@@ -56,7 +56,7 @@ struct Measurement {
   /// Initialization constructor for the measurement
   Measurement(double v,
               double w,
-              const std::chrono::time_point& stamp) :
+              const std::chrono::time_point<std::chrono::system_clock>& stamp) :
     v(v),
     w(w),
     stamp(stamp) {}
@@ -70,7 +70,7 @@ struct Measurement {
   double w;
 
   /// The time stamp of the measurment
-  std::chrono::time_point stamp;
+  std::chrono::time_point<std::chrono::system_clock> stamp;
 };
 
 struct Particle {
